@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "TSMXMPPFramework"
-  s.version      = "0.0.1"
-  s.summary      = "A short description of TSMXMPPFramework."
+  s.version      = "0.1.0"
+  s.summary      = "A TSMXMPPFramework Pod."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,9 +25,10 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
+  A TSM Pod using xcode framework
                    DESC
 
-  s.homepage     = "http://EXAMPLE/TSMXMPPFramework"
+  s.homepage     = "https://github.com/smith1996/TSMXMPPFramework"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -38,7 +39,7 @@ Pod::Spec.new do |s|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  s.license      = "MIT (example)"
+  s.license      = { :type => "MIT", :file => "LICENSE" }
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
@@ -52,7 +53,7 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.author             = { "Smith Huamani Hilario" => "" }
+  s.author             = { "Smith Huamani Hilario" => "smithhh1996@gmail.com" }
   # Or just: s.author    = "Smith Huamani Hilario"
   # s.authors            = { "Smith Huamani Hilario" => "" }
   # s.social_media_url   = "http://twitter.com/Smith Huamani Hilario"
@@ -64,7 +65,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  # s.platform     = :ios, "5.0"
+  s.platform     = :ios, "11.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -79,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "http://EXAMPLE/TSMXMPPFramework.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/smith1996/TSMXMPPFramework.git" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,7 +91,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Classes", "Classes/**/*.{h,m}"
+  s.source_files  = "TSMXMPPFramework", "TSMXMPPFramework/**/*.{h,m,swift}"
   s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -122,7 +123,6 @@ Pod::Spec.new do |s|
   # s.library   = "iconv"
   # s.libraries = "iconv", "xml2"
 
-
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
   #  If your library depends on compiler flags you can set them in the xcconfig hash
@@ -133,5 +133,7 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"
+  s.dependency 'XMPPFramework', '~> 3.7.0'
+
 
 end
