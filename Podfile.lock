@@ -1,4 +1,7 @@
 PODS:
+  - AWSCore (2.6.16)
+  - AWSS3 (2.6.16):
+    - AWSCore (= 2.6.16)
   - CocoaAsyncSocket (7.6.3)
   - CocoaLumberjack (3.4.1):
     - CocoaLumberjack/Default (= 3.4.1)
@@ -13,21 +16,26 @@ PODS:
     - KissXML (~> 5.2.0)
 
 DEPENDENCIES:
+  - AWSS3 (~> 2.6.13)
   - XMPPFramework (~> 3.7.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - AWSCore
+    - AWSS3
     - CocoaAsyncSocket
     - CocoaLumberjack
     - KissXML
     - XMPPFramework
 
 SPEC CHECKSUMS:
+  AWSCore: 314df68684e338310409c6a3b050e28932deb6ff
+  AWSS3: 218b24bc68387f0c715fd37168f9db6cbec9d0a7
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaLumberjack: 2e258a064cacc8eb9a2aca318e24d02a0a7fd56d
   KissXML: 4418f32138aec43797891845d682b00fc8cd4677
   XMPPFramework: 6f99ad1afcdb0cdbec7192a8e4c542c3fc3de6f8
 
-PODFILE CHECKSUM: 9b1d26fef7f3e97c9dbf0e850b5d73683502c5fb
+PODFILE CHECKSUM: e8df2cc1900d9d01257d548b7b118431053038e6
 
 COCOAPODS: 1.5.0

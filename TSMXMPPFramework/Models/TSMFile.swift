@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal struct TSMFile: Codable {
+public struct TSMFile: Codable {
 
     let id: String
     let nameFile: String

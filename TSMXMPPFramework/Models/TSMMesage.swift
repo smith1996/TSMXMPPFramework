@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal struct TSMMessage: Codable {
+public struct TSMMessage: Codable {
 
     let id: String
     let text: String

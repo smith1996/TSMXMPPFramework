@@ -9,11 +9,11 @@
 import Foundation
 import XMPPFramework
 
-protocol TSMXMPPIncomingMessageDelegate {
+public protocol TSMXMPPIncomingMessageDelegate {
     func receivedMessage(message: Message)
 }
 
-protocol TSMXMPPOutgoingMessageDelegate {
+public protocol TSMXMPPOutgoingMessageDelegate {
     func willSendMessage(message: Message)
     func willReceiveSendMessage(message: Message)
     func didFailToSendMessage(error: Error?)
@@ -31,8 +31,8 @@ public class TSMXMPP: TSMXMPPClientDelegate {
     var passwordJID: String!
     var isAutoReconnecting: Bool!
 
-    var xmppIncomingMessageDelegate: TSMXMPPIncomingMessageDelegate!
-    var xmppOutgoingMessageDelegate: TSMXMPPOutgoingMessageDelegate!
+    public var xmppIncomingMessageDelegate: TSMXMPPIncomingMessageDelegate!
+    public var xmppOutgoingMessageDelegate: TSMXMPPOutgoingMessageDelegate!
 
     public init(domain: String) {
 
@@ -89,18 +89,20 @@ public class TSMXMPP: TSMXMPPClientDelegate {
 
     public func login(username: String) {
 
-        do {
-            if !xmppStream.isConnected() {
-                try! xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
-            }
-            if !xmppStream.isAuthenticated() {
-                xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
-                passwordJID = "12345678"
-            }
-
-        } catch let error as NSError {
-            print("Error connecting 😡😡😡: " + error.debugDescription)
+        if xmppStream.isAuthenticated() && xmppStream.isConnected(){
+            xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
+            passwordJID = "12345678"
         }
+
+        if xmppStream.isConnected() {
+
+            do {
+                try xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
+            } catch let error as NSError {
+                print("Error connecting 😡😡😡: " + error.debugDescription)
+            }
+        }
+
     }
 
     public func autoReconnect(isAutoreconnecting: Bool) {

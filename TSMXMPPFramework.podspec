@@ -134,6 +134,6 @@ Pod::Spec.new do |s|
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"
   s.dependency 'XMPPFramework', '~> 3.7.0'
-
+  s.dependency 'AWSS3', '~> 2.6.13'
 
 end

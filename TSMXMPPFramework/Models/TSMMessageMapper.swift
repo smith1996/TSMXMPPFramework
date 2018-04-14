@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal struct TSMMessageMapper {
+public struct TSMMessageMapper {
 
     static let instances = TSMMessageMapper()
 

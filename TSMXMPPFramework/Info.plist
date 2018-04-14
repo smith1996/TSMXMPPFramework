@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>AWSS3</key>
+    <dict>
+        <key>IdentityPoolId</key>
+        <string>us-west-2:c0f33c9f-dd56-4bd1-a210-6329d5864fd1</string>
+        <key>Bucket</key>
+        <string>awstaxibucket01</string>
+        <key>Url AmazonWS</key>
+        <string>https://awstaxibucket01.s3.amazonaws.com/</string>
+    </dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

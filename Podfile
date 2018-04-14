@@ -7,5 +7,6 @@ target 'TSMXMPPFramework' do
 
   # Pods for TSMXMPPFramework
   pod 'XMPPFramework', '~> 3.7.0'
+  pod 'AWSS3', '~> 2.6.13'
 
 end
