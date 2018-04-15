@@ -17,7 +17,12 @@ public struct ManagerAWSS3 {
     private var credentialsProvider: AWSCognitoCredentialsProvider? = nil
     private var configuration: AWSServiceConfiguration? = nil
 
+
     mutating func serviceConfiguration() -> AWSServiceConfiguration {
+
+        TSMXMPP.sharedInstance.setupStream()
+
+        let tsm = TSMXMPP(domain: <#T##String#>)
 
         if credentialsProvider == nil {
             credentialsProvider = AWSCognitoCredentialsProvider(regionType: .USWest2, identityPoolId: Configurations.sharedInstance.identityPoolId)
