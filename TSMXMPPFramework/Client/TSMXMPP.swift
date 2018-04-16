@@ -23,7 +23,6 @@ public protocol TSMXMPPOutgoingMessageDelegate {
 public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
     private var hostDomain = ""
-    private var resource = ""
 
     var xmppStream: XMPPStream!
     private var xmppRoster: XMPPRoster!
@@ -43,7 +42,6 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         xmppStream.hostPort = 5222
         xmppStream.startTLSPolicy = .allowed
         hostDomain = domain
-        resource = "mobile"
 
         xmppRosterStorage = XMPPRosterMemoryStorage()
         xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
@@ -56,7 +54,8 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     }
 
     public var getFullNameJID: String {
-        return xmppStream.myJID!.full().replacingOccurrences(of: "'\'" + resource, with: "")
+        let fullname = xmppStream.myJID!.full().components(separatedBy: "/")
+        return fullname[0]
     }
 
     public func disconnect() {
@@ -76,7 +75,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     public func login(username: String, password: String) {
 
         if !xmppStream.isAuthenticated() && !xmppStream.isConnected(){
-            xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
+            xmppStream.myJID = XMPPJID(string: username + "@" + hostDomain)
             passwordJID = password
         }
 
@@ -95,7 +94,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     public func login(username: String) {
 
         if !xmppStream.isAuthenticated() && !xmppStream.isConnected(){
-            xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
+            xmppStream.myJID = XMPPJID(string: username + "@" + hostDomain)
             passwordJID = "123"
         }
 
@@ -145,7 +144,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
     private func sendToXMPP(sendTo: String, message: TSMMessage) {
 
-        let sendTo = XMPPJID(user: sendTo, domain: hostDomain, resource: resource)
+        let sendTo = XMPPJID(string: sendTo + "@" + hostDomain)
         let messageTo = XMPPMessage(type: "chat", to: sendTo)
         // Parse Object a JSON
         let encodeData = try? JSONEncoder().encode(message)
@@ -153,11 +152,13 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         if self.xmppStream.isConnected() {
 
             messageTo?.addBody(String(data: encodeData!, encoding: .utf8)!)
+            xmppStream.send(messageTo)
         }else {
 
             if(isAutoReconnecting) {
                 try! xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
                 messageTo?.addBody(String(data: encodeData!, encoding: .utf8)!)
+                xmppStream.send(messageTo)
             }
         }
 
