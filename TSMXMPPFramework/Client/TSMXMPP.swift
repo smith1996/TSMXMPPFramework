@@ -120,7 +120,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         self.sendToXMPP(sendTo: sendTo, message: messageResponse)
     }
 
-    func sendMessageAndFile(sendTo: String, message: String, listURL: [URL]) {
+    public func sendMessageAndFile(sendTo: String, message: String, listURL: [URL]) {
 
         DispatchQueue.main.sync {
 
@@ -131,7 +131,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
     }
 
-    func sendMessageAndFileAsync(sendTo: String, message: String, listURL: [URL]) {
+    public func sendMessageAndFileAsync(sendTo: String, message: String, listURL: [URL]) {
 
         DispatchQueue.main.sync {
 
