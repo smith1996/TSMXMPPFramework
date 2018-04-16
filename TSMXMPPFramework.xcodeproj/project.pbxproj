@@ -17,7 +17,7 @@
 		4A69D3D52081744D00412BC9 /* TSMMessageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3D42081744D00412BC9 /* TSMMessageMapper.swift */; };
 		4A69D3D920818AA300412BC9 /* ManagerFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3D820818AA300412BC9 /* ManagerFiles.swift */; };
 		4A69D3DB20818B0800412BC9 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3DA20818B0800412BC9 /* Configurations.swift */; };
-		4A69D3DD20818CFD00412BC9 /* ManagerAWSS3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3DC20818CFD00412BC9 /* ManagerAWSS3.swift */; };
+		4A69D3E020841D0000412BC9 /* ManagerAWSS3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3DF20841D0000412BC9 /* ManagerAWSS3.swift */; };
 		7D43B0FCB47C8DF3080AA54C /* Pods_TSMXMPPFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1F5D77F551B2AA48283A6 /* Pods_TSMXMPPFramework.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,7 +35,7 @@
 		4A69D3D42081744D00412BC9 /* TSMMessageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSMMessageMapper.swift; sourceTree = "<group>"; };
 		4A69D3D820818AA300412BC9 /* ManagerFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerFiles.swift; sourceTree = "<group>"; };
 		4A69D3DA20818B0800412BC9 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
-		4A69D3DC20818CFD00412BC9 /* ManagerAWSS3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagerAWSS3.swift; path = TSMXMPPFramework/ManagerAWSS3/ManagerAWSS3.swift; sourceTree = SOURCE_ROOT; };
+		4A69D3DF20841D0000412BC9 /* ManagerAWSS3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagerAWSS3.swift; path = TSMXMPPFramework/AWSS3/ManagerAWSS3.swift; sourceTree = SOURCE_ROOT; };
 		9DF1F5D77F551B2AA48283A6 /* Pods_TSMXMPPFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TSMXMPPFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5F9F793778D0FD0C7CAA1F /* Pods-TSMXMPPFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSMXMPPFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-TSMXMPPFramework/Pods-TSMXMPPFramework.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,8 +82,8 @@
 		4A69D3B9208159D500412BC9 /* TSMXMPPFramework */ = {
 			isa = PBXGroup;
 			children = (
+				4A69D3DE20841CED00412BC9 /* AWSS3 */,
 				4A69D3C72081734500412BC9 /* Utils */,
-				4A69D3C62081732E00412BC9 /* AWSS3 */,
 				4A69D3C52081731200412BC9 /* Models */,
 				4A69D3C42081730800412BC9 /* Client */,
 				4A69D3BA208159D500412BC9 /* TSMXMPPFramework.h */,
@@ -112,14 +112,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		4A69D3C62081732E00412BC9 /* AWSS3 */ = {
-			isa = PBXGroup;
-			children = (
-				4A69D3DC20818CFD00412BC9 /* ManagerAWSS3.swift */,
-			);
-			path = AWSS3;
-			sourceTree = "<group>";
-		};
 		4A69D3C72081734500412BC9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +136,15 @@
 				4A69D3CE208173C600412BC9 /* File.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4A69D3DE20841CED00412BC9 /* AWSS3 */ = {
+			isa = PBXGroup;
+			children = (
+				4A69D3DF20841D0000412BC9 /* ManagerAWSS3.swift */,
+			);
+			name = AWSS3;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		66893AD7D2C3B02B2CD10D3A /* Frameworks */ = {
@@ -263,7 +264,7 @@
 				4A69D3CF208173C600412BC9 /* File.swift in Sources */,
 				4A69D3C320815BE400412BC9 /* TSMXMPP.swift in Sources */,
 				4A69D3DB20818B0800412BC9 /* Configurations.swift in Sources */,
-				4A69D3DD20818CFD00412BC9 /* ManagerAWSS3.swift in Sources */,
+				4A69D3E020841D0000412BC9 /* ManagerAWSS3.swift in Sources */,
 				4A69D3D32081742500412BC9 /* TSMFile.swift in Sources */,
 				4A69D3CA2081738300412BC9 /* TSMXMPPClientDelegate.swift in Sources */,
 			);

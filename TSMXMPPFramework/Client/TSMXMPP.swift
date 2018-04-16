@@ -10,6 +10,8 @@ import Foundation
 import XMPPFramework
 
 public protocol TSMXMPPIncomingMessageDelegate {
+    
+    func loginState(success: Bool, error: Error?)
     func receivedMessage(message: Message)
 }
 
@@ -34,30 +36,24 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     public var xmppIncomingMessageDelegate: TSMXMPPIncomingMessageDelegate!
     public var xmppOutgoingMessageDelegate: TSMXMPPOutgoingMessageDelegate!
 
-    public static let sharedInstance = TSMXMPP()
-
-    override init() {
-    }
-
-    public func setupTSMXMPP() {
+    public init(domain: String) {
 
         xmppStream = XMPPStream()
-
-        xmppRosterStorage = XMPPRosterMemoryStorage()
-        xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
-        xmppRoster.autoFetchRoster = true
-
-        xmppStream.addDelegate(self, delegateQueue: DispatchQueue.main)
-    }
-
-    public init(domain: String) {
-        super.init()
 
         xmppStream.hostName = "192.168.1.238"
         xmppStream.hostPort = 5222
         xmppStream.startTLSPolicy = .allowed
         hostDomain = domain
         resource = "mobile"
+
+        xmppRosterStorage = XMPPRosterMemoryStorage()
+        xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
+        xmppRoster.autoFetchRoster = true
+
+        super.init()
+
+        xmppStream.addDelegate(self, delegateQueue: DispatchQueue.main)
+
     }
 
     public var getFullNameJID: String {
@@ -80,34 +76,37 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
     public func login(username: String, password: String) {
 
-        do {
-            if !xmppStream.isConnected() {
-                try! xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
-            }
+        if !xmppStream.isAuthenticated() && !xmppStream.isConnected(){
+            xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
+            passwordJID = password
+        }
 
-            if !xmppStream.isAuthenticated() {
-                xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
-                passwordJID = password
+        if !xmppStream.isConnected() {
+
+            do {
+                try xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
+            } catch let error as NSError {
+                print("Error connecting 😡😡😡: " + error.debugDescription)
+                xmppIncomingMessageDelegate.loginState(success: false, error: error)
             }
-        } catch let error as NSError {
-            print("Error connecting 😡😡😡: " + error.debugDescription)
         }
 
     }
 
     public func login(username: String) {
 
-        if xmppStream.isAuthenticated() && xmppStream.isConnected(){
+        if !xmppStream.isAuthenticated() && !xmppStream.isConnected(){
             xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
             passwordJID = "12345678"
         }
 
-        if xmppStream.isConnected() {
+        if !xmppStream.isConnected() {
 
             do {
                 try xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
             } catch let error as NSError {
                 print("Error connecting 😡😡😡: " + error.debugDescription)
+                xmppIncomingMessageDelegate.loginState(success: false, error: error)
             }
         }
 
@@ -169,6 +168,11 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
 extension TSMXMPP: XMPPStreamDelegate {
 
+    public func xmppStreamWillConnect(_ sender: XMPPStream!) {
+        print("WillConnect. 👍🙏")
+        print(sender.myJID.full())
+    }
+
     public func xmppStreamDidConnect(_ sender: XMPPStream) {
         print("Connected successlly.😀👍")
         print("Loggin in as " + sender.myJID!.full())
@@ -176,7 +180,8 @@ extension TSMXMPP: XMPPStreamDelegate {
         do {
             try xmppStream.authenticate(withPassword: self.passwordJID)
         } catch let error as NSError  {
-            print("Error authenticating 😡😡😡: " + error.debugDescription);
+            print("Error authenticating ❌❌❌: " + error.debugDescription)
+            xmppIncomingMessageDelegate.loginState(success: false, error: error)
         }
     }
 
@@ -185,14 +190,18 @@ extension TSMXMPP: XMPPStreamDelegate {
         isAutoReconnecting = true
         let presence = XMPPPresence()
         xmppStream.send(presence)
+
+        xmppIncomingMessageDelegate.loginState(success: true, error: nil)
     }
 
     public func xmppStreamDidDisconnect(_ sender: XMPPStream, withError error: Error?) {
-        print("Stream disconnected with error 😡😡: " + error.debugDescription)
+        print("Stream disconnected with error ❌❌: " + error.debugDescription)
+
+        xmppIncomingMessageDelegate.loginState(success: false, error: error)
     }
 
     public func xmppStream(_ sender: XMPPStream, didNotAuthenticate error: XMLElement) {
-        print("Authentication failed with error 😡😡: " + error.debugDescription)
+        print("Authentication failed with error ❌❌: " + error.debugDescription)
     }
 
     public func xmppStream(_ sender: XMPPStream, didReceive presence: XMPPPresence) {
