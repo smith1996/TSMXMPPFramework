@@ -18,27 +18,33 @@ public struct TSMMessageMapper {
 
     func transformFiles(arrayTSMmessage: [TSMFile]) -> [File] {
         var arrayFile = [File]()
-        if arrayTSMmessage.count != 0 {
-            for item in arrayTSMmessage {
-                let file = File(id: item.id, nameFile: item.nameFile, mimeType: item.mimeType, url: item.url)
-                arrayFile.append(file)
-            }
-        }else {
+
+        guard arrayTSMmessage.count != 0 else {
             arrayFile = []
+            return arrayFile
         }
+
+        let file = arrayTSMmessage.map { (data) -> File in
+            return File(id: data.id, nameFile: data.nameFile, mimeType: data.mimeType, url: data.url)
+        }
+        arrayFile = file
+
         return arrayFile
     }
 
     func transformFilesUser(arrayFiles: [URL]) -> [TSMFile] {
         var arrayFile = [TSMFile]()
-        if arrayFiles.count != 0 {
-            for item in arrayFiles {
-                let file = TSMFile(id: UUID().uuidString, nameFile: item.lastPathComponent, mimeType: item.pathExtension, url: item.absoluteString)
-                arrayFile.append(file)
-            }
-        }else {
+
+        guard arrayFiles.count != 0 else {
             arrayFile = []
+            return arrayFile
         }
+
+        let fileUrl = arrayFiles.map { (data) -> TSMFile in
+            return TSMFile(id: UUID().uuidString, nameFile: data.lastPathComponent, mimeType: data.pathExtension, url: data.absoluteString)
+        }
+
+        arrayFile = fileUrl
         return arrayFile
     }
 

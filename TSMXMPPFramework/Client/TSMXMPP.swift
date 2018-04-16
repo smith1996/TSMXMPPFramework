@@ -10,7 +10,6 @@ import Foundation
 import XMPPFramework
 
 public protocol TSMXMPPIncomingMessageDelegate {
-    
     func loginState(success: Bool, error: Error?)
     func receivedMessage(message: Message)
 }
@@ -51,7 +50,6 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         xmppRoster.autoFetchRoster = true
 
         super.init()
-
         xmppStream.addDelegate(self, delegateQueue: DispatchQueue.main)
 
     }

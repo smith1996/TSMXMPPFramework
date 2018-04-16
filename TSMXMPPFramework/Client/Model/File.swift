@@ -7,10 +7,8 @@
 //
 
 public struct File {
-
-    let id: String
-    let nameFile: String
-    let mimeType: String
-    let url: String
-
+    public let id: String
+    public let nameFile: String
+    public let mimeType: String
+    public let url: String
 }

@@ -9,11 +9,9 @@
 import Foundation
 
 public struct TSMFile: Codable {
-
     let id: String
     let nameFile: String
     let mimeType: String
     let url: String
-
 }
 
