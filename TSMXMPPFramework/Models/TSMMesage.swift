@@ -10,6 +10,7 @@ import Foundation
 
 public struct TSMMessage: Codable {
     let id: String
+    let userSender: String
     let text: String
     let time: String
     let files: [TSMFile]?

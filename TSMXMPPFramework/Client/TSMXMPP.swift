@@ -48,14 +48,15 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         xmppRosterStorage = XMPPRosterMemoryStorage()
         xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
         xmppRoster.autoFetchRoster = true
-
+        xmppRoster.activate(xmppStream)
+        
         super.init()
         xmppStream.addDelegate(self, delegateQueue: DispatchQueue.main)
 
     }
 
     public var getFullNameJID: String {
-        return xmppStream.myJID!.full()
+        return xmppStream.myJID!.full().replacingOccurrences(of: "'\'" + resource, with: "")
     }
 
     public func disconnect() {
@@ -95,7 +96,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
         if !xmppStream.isAuthenticated() && !xmppStream.isConnected(){
             xmppStream.myJID = XMPPJID(user: username, domain: hostDomain, resource: resource)
-            passwordJID = "12345678"
+            passwordJID = "123"
         }
 
         if !xmppStream.isConnected() {
@@ -116,7 +117,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
     public func sendMessage(sendTo: String, message: String) {
 
-        let messageResponse = TSMMessage(id: UUID().uuidString, text: message, time: getDateCurrent(date: Date()), files: [])
+        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: getDateCurrent(date: Date()), files: [])
         self.sendToXMPP(sendTo: sendTo, message: messageResponse)
     }
 
@@ -125,7 +126,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         DispatchQueue.main.sync {
 
             let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
-            let messageResponse = TSMMessage(id: UUID().uuidString, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
+            let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
             self.sendToXMPP(sendTo: sendTo, message: messageResponse)
         }
 
@@ -136,7 +137,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         DispatchQueue.main.sync {
 
             let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
-            let messageResponse = TSMMessage(id: UUID().uuidString, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
+            let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
             self.sendToXMPP(sendTo: sendTo, message: messageResponse)
         }
 

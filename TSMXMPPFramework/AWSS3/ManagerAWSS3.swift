@@ -17,7 +17,6 @@ public struct ManagerAWSS3 {
     private var credentialsProvider: AWSCognitoCredentialsProvider? = nil
     private var configuration: AWSServiceConfiguration? = nil
 
-
     mutating func serviceConfiguration() -> AWSServiceConfiguration {
 
         if credentialsProvider == nil {

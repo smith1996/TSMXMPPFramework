@@ -18,11 +18,11 @@
 		4A69D3D920818AA300412BC9 /* ManagerFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3D820818AA300412BC9 /* ManagerFiles.swift */; };
 		4A69D3DB20818B0800412BC9 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3DA20818B0800412BC9 /* Configurations.swift */; };
 		4A69D3E020841D0000412BC9 /* ManagerAWSS3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3DF20841D0000412BC9 /* ManagerAWSS3.swift */; };
-		7D43B0FCB47C8DF3080AA54C /* Pods_TSMXMPPFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1F5D77F551B2AA48283A6 /* Pods_TSMXMPPFramework.framework */; };
+		E5358DE17B43A390801B751A /* Pods_TSMXMPPFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6CD7F7CD2DCAEB3F103549 /* Pods_TSMXMPPFramework.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		151B6056A12C2306A0C92BF1 /* Pods-TSMXMPPFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSMXMPPFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TSMXMPPFramework/Pods-TSMXMPPFramework.debug.xcconfig"; sourceTree = "<group>"; };
+		22171C1E9A091B85C7503C50 /* Pods-TSMXMPPFramework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSMXMPPFramework.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TSMXMPPFramework/Pods-TSMXMPPFramework.debug.xcconfig"; sourceTree = "<group>"; };
 		4A69D3B7208159D500412BC9 /* TSMXMPPFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TSMXMPPFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A69D3BA208159D500412BC9 /* TSMXMPPFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSMXMPPFramework.h; sourceTree = "<group>"; };
 		4A69D3BB208159D500412BC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,8 +36,8 @@
 		4A69D3D820818AA300412BC9 /* ManagerFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerFiles.swift; sourceTree = "<group>"; };
 		4A69D3DA20818B0800412BC9 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		4A69D3DF20841D0000412BC9 /* ManagerAWSS3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagerAWSS3.swift; path = TSMXMPPFramework/AWSS3/ManagerAWSS3.swift; sourceTree = SOURCE_ROOT; };
-		9DF1F5D77F551B2AA48283A6 /* Pods_TSMXMPPFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TSMXMPPFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD5F9F793778D0FD0C7CAA1F /* Pods-TSMXMPPFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSMXMPPFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-TSMXMPPFramework/Pods-TSMXMPPFramework.release.xcconfig"; sourceTree = "<group>"; };
+		7F6CD7F7CD2DCAEB3F103549 /* Pods_TSMXMPPFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TSMXMPPFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBD73B1EF8C1E811ACF167CD /* Pods-TSMXMPPFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSMXMPPFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-TSMXMPPFramework/Pods-TSMXMPPFramework.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,29 +45,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D43B0FCB47C8DF3080AA54C /* Pods_TSMXMPPFramework.framework in Frameworks */,
+				E5358DE17B43A390801B751A /* Pods_TSMXMPPFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		42A1B87850F65E8C47E8190A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				151B6056A12C2306A0C92BF1 /* Pods-TSMXMPPFramework.debug.xcconfig */,
-				DD5F9F793778D0FD0C7CAA1F /* Pods-TSMXMPPFramework.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		4A69D3AD208159D500412BC9 = {
 			isa = PBXGroup;
 			children = (
 				4A69D3B9208159D500412BC9 /* TSMXMPPFramework */,
 				4A69D3B8208159D500412BC9 /* Products */,
-				42A1B87850F65E8C47E8190A /* Pods */,
-				66893AD7D2C3B02B2CD10D3A /* Frameworks */,
+				9C8744202CA6588F3A471D89 /* Pods */,
+				FA8CFDEDE6908D9CD2B773F5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,10 +138,19 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
-		66893AD7D2C3B02B2CD10D3A /* Frameworks */ = {
+		9C8744202CA6588F3A471D89 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9DF1F5D77F551B2AA48283A6 /* Pods_TSMXMPPFramework.framework */,
+				22171C1E9A091B85C7503C50 /* Pods-TSMXMPPFramework.debug.xcconfig */,
+				DBD73B1EF8C1E811ACF167CD /* Pods-TSMXMPPFramework.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FA8CFDEDE6908D9CD2B773F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F6CD7F7CD2DCAEB3F103549 /* Pods_TSMXMPPFramework.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -173,7 +173,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A69D3BF208159D500412BC9 /* Build configuration list for PBXNativeTarget "TSMXMPPFramework" */;
 			buildPhases = (
-				E8487B888A4CA8AB3EA7DE6D /* [CP] Check Pods Manifest.lock */,
+				44F5D214F0A413D908F2E082 /* [CP] Check Pods Manifest.lock */,
 				4A69D3B2208159D500412BC9 /* Sources */,
 				4A69D3B3208159D500412BC9 /* Frameworks */,
 				4A69D3B4208159D500412BC9 /* Headers */,
@@ -232,7 +232,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E8487B888A4CA8AB3EA7DE6D /* [CP] Check Pods Manifest.lock */ = {
+		44F5D214F0A413D908F2E082 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -388,7 +388,7 @@
 		};
 		4A69D3C0208159D500412BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 151B6056A12C2306A0C92BF1 /* Pods-TSMXMPPFramework.debug.xcconfig */;
+			baseConfigurationReference = 22171C1E9A091B85C7503C50 /* Pods-TSMXMPPFramework.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -412,7 +412,7 @@
 		};
 		4A69D3C1208159D500412BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD5F9F793778D0FD0C7CAA1F /* Pods-TSMXMPPFramework.release.xcconfig */;
+			baseConfigurationReference = DBD73B1EF8C1E811ACF167CD /* Pods-TSMXMPPFramework.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
