@@ -12,8 +12,8 @@ public struct TSMMessageMapper {
 
     static let instances = TSMMessageMapper()
 
-    func transferMessage(tsmMessage: TSMMessage) -> Message {
-        return Message(id: tsmMessage.id, userSender: tsmMessage.userSender, text: tsmMessage.text, time: tsmMessage.time, files: transformFiles(arrayTSMmessage: tsmMessage.files!))
+    func transferMessage(tsmMessage: TSMMessage, isForme: Bool) -> Message {
+        return Message(id: tsmMessage.id, userSender: tsmMessage.userSender, isForMe: isForme, text: tsmMessage.text, time: tsmMessage.time, files: transformFiles(arrayTSMmessage: tsmMessage.files!))
     }
 
     func transformFiles(arrayTSMmessage: [TSMFile]) -> [File] {

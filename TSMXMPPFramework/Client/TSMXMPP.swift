@@ -38,7 +38,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
         xmppStream = XMPPStream()
 
-        xmppStream.hostName = "192.168.1.238"
+        xmppStream.hostName = "52.33.108.200"
         xmppStream.hostPort = 5222
         xmppStream.startTLSPolicy = .allowed
         hostDomain = domain
@@ -122,24 +122,17 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
     public func sendMessageAndFile(sendTo: String, message: String, listURL: [URL]) {
 
-        DispatchQueue.main.sync {
-
-            let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
-            let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
-            self.sendToXMPP(sendTo: sendTo, message: messageResponse)
-        }
+        let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
+        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
+        self.sendToXMPP(sendTo: sendTo, message: messageResponse)
 
     }
 
     public func sendMessageAndFileAsync(sendTo: String, message: String, listURL: [URL]) {
 
-        DispatchQueue.main.sync {
-
-            let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
-            let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
-            self.sendToXMPP(sendTo: sendTo, message: messageResponse)
-        }
-
+        let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
+        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
+        self.sendToXMPP(sendTo: sendTo, message: messageResponse)
     }
 
     private func sendToXMPP(sendTo: String, message: TSMMessage) {
@@ -211,7 +204,7 @@ extension TSMXMPP: XMPPStreamDelegate {
 
     public func xmppStream(_ sender: XMPPStream, willSend message: XMPPMessage) -> XMPPMessage? {
 
-        print("Will send message 👉✉️")
+        print("Will send message ✈️✉️")
         print(message.to, message.from, message.body())
 
         // Parse JSON to Object
@@ -219,7 +212,7 @@ extension TSMXMPP: XMPPStreamDelegate {
         let messageResponse = try! JSONDecoder().decode(TSMMessage.self, from: jsonData)
         //
 
-        self.xmppOutgoingMessageDelegate.willSendMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse))
+        self.xmppOutgoingMessageDelegate.willSendMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse, isForme: false))
 
         return message
     }
@@ -233,7 +226,7 @@ extension TSMXMPP: XMPPStreamDelegate {
         let jsonData = message.body().data(using: .utf8)!
         let messageResponse = try! JSONDecoder().decode(TSMMessage.self, from: jsonData)
 
-        self.xmppOutgoingMessageDelegate.willReceiveSendMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse))
+        self.xmppOutgoingMessageDelegate.willSendMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse, isForme: true))
 
         return message
     }
@@ -247,7 +240,7 @@ extension TSMXMPP: XMPPStreamDelegate {
         let messageResponse = try! JSONDecoder().decode(TSMMessage.self, from: jsonData)
         //
 
-        self.xmppIncomingMessageDelegate.receivedMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse))
+        self.xmppIncomingMessageDelegate.receivedMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse, isForme: true))
     }
 
     public func xmppStream(_ sender: XMPPStream, didFailToSend message: XMPPMessage, error: Error) {
