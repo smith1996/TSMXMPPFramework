@@ -18,6 +18,7 @@
 		4A69D3D920818AA300412BC9 /* ManagerFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3D820818AA300412BC9 /* ManagerFiles.swift */; };
 		4A69D3DB20818B0800412BC9 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3DA20818B0800412BC9 /* Configurations.swift */; };
 		4A69D3E020841D0000412BC9 /* ManagerAWSS3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A69D3DF20841D0000412BC9 /* ManagerAWSS3.swift */; };
+		7D6BA1C720880BB2001435C1 /* ManagerAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6BA1C620880BB2001435C1 /* ManagerAudio.swift */; };
 		E5358DE17B43A390801B751A /* Pods_TSMXMPPFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6CD7F7CD2DCAEB3F103549 /* Pods_TSMXMPPFramework.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		4A69D3D820818AA300412BC9 /* ManagerFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerFiles.swift; sourceTree = "<group>"; };
 		4A69D3DA20818B0800412BC9 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		4A69D3DF20841D0000412BC9 /* ManagerAWSS3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagerAWSS3.swift; path = TSMXMPPFramework/AWSS3/ManagerAWSS3.swift; sourceTree = SOURCE_ROOT; };
+		7D6BA1C620880BB2001435C1 /* ManagerAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerAudio.swift; sourceTree = "<group>"; };
 		7F6CD7F7CD2DCAEB3F103549 /* Pods_TSMXMPPFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TSMXMPPFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBD73B1EF8C1E811ACF167CD /* Pods-TSMXMPPFramework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TSMXMPPFramework.release.xcconfig"; path = "Pods/Target Support Files/Pods-TSMXMPPFramework/Pods-TSMXMPPFramework.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,7 @@
 			children = (
 				4A69D3D820818AA300412BC9 /* ManagerFiles.swift */,
 				4A69D3DA20818B0800412BC9 /* Configurations.swift */,
+				7D6BA1C620880BB2001435C1 /* ManagerAudio.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				4A69D3E020841D0000412BC9 /* ManagerAWSS3.swift in Sources */,
 				4A69D3D32081742500412BC9 /* TSMFile.swift in Sources */,
 				4A69D3CA2081738300412BC9 /* TSMXMPPClientDelegate.swift in Sources */,
+				7D6BA1C720880BB2001435C1 /* ManagerAudio.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

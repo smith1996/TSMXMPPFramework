@@ -226,7 +226,7 @@ extension TSMXMPP: XMPPStreamDelegate {
         let jsonData = message.body().data(using: .utf8)!
         let messageResponse = try! JSONDecoder().decode(TSMMessage.self, from: jsonData)
 
-        self.xmppOutgoingMessageDelegate.willSendMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse, isForme: true))
+        self.xmppOutgoingMessageDelegate.willReceiveSendMessage(message: TSMMessageMapper.instances.transferMessage(tsmMessage: messageResponse, isForme: true))
 
         return message
     }
