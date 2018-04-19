@@ -13,44 +13,49 @@ public typealias CompletionBlock = (Bool, String) -> Void
 
 public class TSMAudio {
 
-    var audioRecorder: AVAudioRecorder?
-    var player: AVAudioPlayer?
-
+    private var audioRecorder: AVAudioRecorder?
+    private var player: AVAudioPlayer?
+    
     public init() {
-        audioRecorder = AVAudioRecorder()
         player = AVAudioPlayer()
     }
 
-    public func enablePermissionsAudio(completion : @escaping CompletionBlock) {
-
+    public func enablePermissionsAudio(completion : @escaping CompletionBlock, dispatchAsync: Bool) {
+        
         let audioRecordingSession = AVAudioSession.sharedInstance()
-
+        
         do {
             try audioRecordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
             try audioRecordingSession.setActive(true)
-
+            
             audioRecordingSession.requestRecordPermission({ (allowed) in
-                DispatchQueue.main.async {
-                    if allowed {
-                        print("Se acepto los permisos de Audio")
+                if dispatchAsync == true {
+                    
+                    DispatchQueue.main.async {
+                        guard allowed == true else {
+                            completion(false, "Se rechazo los permisos de Audio")
+                            return
+                        }
                         completion(true, "Se acepto los permisos de Audio")
-                    }else {
-                        print("Se rechazo los permisos de Audio")
-                        completion(false, "Se rechazo los permisos de Audio")
+                    }
+                }else {
+                    DispatchQueue.main.sync {
+                        guard allowed == true else {
+                            completion(false, "Se rechazo los permisos de Audio")
+                            return
+                        }
+                        completion(true, "Se acepto los permisos de Audio")
                     }
                 }
             })
         } catch let error {
-            print(error.localizedDescription)
             completion(false, error.localizedDescription)
             finishRecording()
         }
     }
 
     public func startRecording(fileName: String) {
-//        let url = fileName.components(separatedBy: ".")
-//        let audioFilename = getDocumentsDirectory().appendingPathComponent(url[0]).appendingPathExtension(url[1])
-
+        
         let audioFilename = searchDocumentsDirectory(pathFile: fileName)
 
         let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -78,7 +83,6 @@ public class TSMAudio {
     }
 
     public func finishRecording()  {
-
         audioRecorder?.stop()
         audioRecorder = nil
     }
@@ -93,6 +97,7 @@ public class TSMAudio {
             sound.prepareToPlay()
             sound.play()
             sound.volume = 2.0
+            
         } catch let error{
             print("Error loading file audio TSM: ", error.localizedDescription)
         }
