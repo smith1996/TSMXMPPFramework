@@ -1,7 +1,7 @@
 PODS:
-  - AWSCore (2.6.14)
-  - AWSS3 (2.6.14):
-    - AWSCore (= 2.6.14)
+  - AWSCore (2.6.16)
+  - AWSS3 (2.6.16):
+    - AWSCore (= 2.6.16)
   - CocoaAsyncSocket (7.6.3)
   - CocoaLumberjack (3.4.1):
     - CocoaLumberjack/Default (= 3.4.1)
@@ -29,8 +29,8 @@ SPEC REPOS:
     - XMPPFramework
 
 SPEC CHECKSUMS:
-  AWSCore: 8c883c2623d314dd82cca3809527784e1d1a02e5
-  AWSS3: a8cf89448c74637e34c46839ce5b5f7850f206e6
+  AWSCore: 314df68684e338310409c6a3b050e28932deb6ff
+  AWSS3: 218b24bc68387f0c715fd37168f9db6cbec9d0a7
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaLumberjack: 2e258a064cacc8eb9a2aca318e24d02a0a7fd56d
   KissXML: 4418f32138aec43797891845d682b00fc8cd4677
