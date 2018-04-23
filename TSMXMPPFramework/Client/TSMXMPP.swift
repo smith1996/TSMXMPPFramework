@@ -10,14 +10,15 @@ import Foundation
 import XMPPFramework
 
 public protocol TSMXMPPIncomingMessageDelegate {
-    func loginState(success: Bool, error: Error?)
+    func connect(error: TSMXMPPError?)
+    func authenticateFailed(error: TSMXMPPError?)
     func receivedMessage(message: Message)
 }
 
 public protocol TSMXMPPOutgoingMessageDelegate {
     func willSendMessage(message: Message)
     func willReceiveSendMessage(message: Message)
-    func didFailToSendMessage(error: Error?)
+    func didFailToSendMessage(error: TSMXMPPError?)
 }
 
 public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
@@ -71,6 +72,17 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         dateFormatter.timeStyle = .short
         return dateFormatter.string(from: date)
     }
+    
+    private func connectToServer() {
+        
+        do {
+            try xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
+        } catch let error as NSError {
+            print("Error connecting 😡😡😡: " + error.debugDescription)
+            xmppIncomingMessageDelegate.authenticateFailed(error: TSMXMPPError(errorCode: .serverTimeout))
+        }
+        
+    }
 
     public func login(username: String, password: String) {
 
@@ -80,13 +92,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         }
 
         if !xmppStream.isConnected() {
-
-            do {
-                try xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
-            } catch let error as NSError {
-                print("Error connecting 😡😡😡: " + error.debugDescription)
-                xmppIncomingMessageDelegate.loginState(success: false, error: error)
-            }
+            connectToServer()
         }
 
     }
@@ -99,13 +105,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         }
 
         if !xmppStream.isConnected() {
-
-            do {
-                try xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
-            } catch let error as NSError {
-                print("Error connecting 😡😡😡: " + error.debugDescription)
-                xmppIncomingMessageDelegate.loginState(success: false, error: error)
-            }
+            connectToServer()
         }
 
     }
@@ -149,7 +149,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         }else {
 
             if(isAutoReconnecting) {
-                try! xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
+                connectToServer()
                 messageTo?.addBody(String(data: encodeData!, encoding: .utf8)!)
                 xmppStream.send(messageTo)
             }
@@ -174,7 +174,7 @@ extension TSMXMPP: XMPPStreamDelegate {
             try xmppStream.authenticate(withPassword: self.passwordJID)
         } catch let error as NSError  {
             print("Error authenticating ❌❌❌: " + error.debugDescription)
-            xmppIncomingMessageDelegate.loginState(success: false, error: error)
+            xmppIncomingMessageDelegate.authenticateFailed(error: TSMXMPPError(errorCode: .authenticationFailed))
         }
     }
 
@@ -184,19 +184,21 @@ extension TSMXMPP: XMPPStreamDelegate {
         let presence = XMPPPresence()
         xmppStream.send(presence)
 
-        xmppIncomingMessageDelegate.loginState(success: true, error: nil)
-    }
-
-    public func xmppStreamDidDisconnect(_ sender: XMPPStream, withError error: Error?) {
-        print("Stream disconnected with error ❌❌: " + error.debugDescription)
-
-        xmppIncomingMessageDelegate.loginState(success: false, error: error)
+        xmppIncomingMessageDelegate.connect(error: nil)
     }
 
     public func xmppStream(_ sender: XMPPStream, didNotAuthenticate error: XMLElement) {
+        
         print("Authentication failed with error ❌❌: " + error.debugDescription)
+        xmppIncomingMessageDelegate.authenticateFailed(error: TSMXMPPError(errorCode: .customer, error: error.description))
     }
-
+    
+    public func xmppStreamDidDisconnect(_ sender: XMPPStream, withError error: Error?) {
+        print("Stream disconnected with error ❌❌: " + error.debugDescription)
+        xmppIncomingMessageDelegate.connect(error: TSMXMPPError(errorCode: .customer, error: error?.localizedDescription))
+    }
+    
+    //////////////////
     public func xmppStream(_ sender: XMPPStream, didReceive presence: XMPPPresence) {
         let presenceUser = presence.prettyXMLString()
         print(presenceUser)
@@ -244,7 +246,7 @@ extension TSMXMPP: XMPPStreamDelegate {
     }
 
     public func xmppStream(_ sender: XMPPStream, didFailToSend message: XMPPMessage, error: Error) {
-        self.xmppOutgoingMessageDelegate.didFailToSendMessage(error: error)
+        self.xmppOutgoingMessageDelegate.didFailToSendMessage(error: TSMXMPPError(errorCode: .customer, error: error.localizedDescription))
     }
 }
 

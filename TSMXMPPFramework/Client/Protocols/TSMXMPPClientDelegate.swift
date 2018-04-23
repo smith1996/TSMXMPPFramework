@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TSMXMPPClientDelegate {
-
+    
     /**
      * Esta funcion requiere de 1 parametro de tipo String para connectarse y
      * logearse al servidor, el framework le generara una contraseña por defecto.
