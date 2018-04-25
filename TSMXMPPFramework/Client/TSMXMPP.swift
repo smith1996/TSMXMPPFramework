@@ -27,7 +27,7 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
 
     var xmppStream: XMPPStream!
     private var xmppRoster: XMPPRoster!
-    private var xmppRosterStorage: XMPPRosterMemoryStorage!
+    private var xmppRosterStorage: XMPPRosterCoreDataStorage!
 
     var passwordJID: String!
     var isAutoReconnecting: Bool!
@@ -36,7 +36,6 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     public var xmppOutgoingMessageDelegate: TSMXMPPOutgoingMessageDelegate!
 
     public init(domain: String) {
-
         xmppStream = XMPPStream()
 
         xmppStream.hostName = "52.33.108.200"
@@ -44,14 +43,13 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         xmppStream.startTLSPolicy = .allowed
         hostDomain = domain
 
-        xmppRosterStorage = XMPPRosterMemoryStorage()
+        xmppRosterStorage = XMPPRosterCoreDataStorage()
         xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
         xmppRoster.autoFetchRoster = true
         xmppRoster.activate(xmppStream)
         
         super.init()
         xmppStream.addDelegate(self, delegateQueue: DispatchQueue.main)
-
     }
 
     public var getFullNameJID: String {
@@ -60,7 +58,6 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     }
 
     public func disconnect() {
-
         self.isAutoReconnecting = false
         var _ = XMPPPresence(type: "unavailable")
         xmppStream.disconnect()
@@ -74,18 +71,14 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     }
     
     private func connectToServer() {
-        
         do {
             try xmppStream.connect(withTimeout: XMPPStreamTimeoutNone)
-        } catch let error as NSError {
-            print("Error connecting 😡😡😡: " + error.debugDescription)
+        } catch {
             xmppIncomingMessageDelegate.authenticateFailed(error: TSMXMPPError(errorCode: .serverTimeout))
         }
-        
     }
 
     public func login(username: String, password: String) {
-
         if !xmppStream.isAuthenticated() && !xmppStream.isConnected(){
             xmppStream.myJID = XMPPJID(string: username + "@" + hostDomain)
             passwordJID = password
@@ -94,11 +87,9 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         if !xmppStream.isConnected() {
             connectToServer()
         }
-
     }
 
     public func login(username: String) {
-
         if !xmppStream.isAuthenticated() && !xmppStream.isConnected(){
             xmppStream.myJID = XMPPJID(string: username + "@" + hostDomain)
             passwordJID = "123"
@@ -107,7 +98,6 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
         if !xmppStream.isConnected() {
             connectToServer()
         }
-
     }
 
     public func autoReconnect(isAutoreconnecting: Bool) {
@@ -115,28 +105,26 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
     }
 
     public func sendMessage(sendTo: String, message: String) {
-
-        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: getDateCurrent(date: Date()), files: [])
+        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain,
+                                         text: message, time: getDateCurrent(date: Date()), files: [])
         self.sendToXMPP(sendTo: sendTo, message: messageResponse)
     }
 
     public func sendMessageAndFile(sendTo: String, message: String, listURL: [URL]) {
-
         let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
-        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
+        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain,
+                                         text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
         self.sendToXMPP(sendTo: sendTo, message: messageResponse)
-
     }
 
     public func sendMessageAndFileAsync(sendTo: String, message: String, listURL: [URL]) {
-
         let arrayTransferFiles = ManagerFiles.sharedInstance.uploadingFiles(arrayUrlPath: listURL)
-        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain, text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
+        let messageResponse = TSMMessage(id: UUID().uuidString, userSender: sendTo + "@" + hostDomain,
+                                         text: message, time: self.getDateCurrent(date: Date()), files: arrayTransferFiles)
         self.sendToXMPP(sendTo: sendTo, message: messageResponse)
     }
 
     private func sendToXMPP(sendTo: String, message: TSMMessage) {
-
         let sendTo = XMPPJID(string: sendTo + "@" + hostDomain)
         let messageTo = XMPPMessage(type: "chat", to: sendTo)
         // Parse Object a JSON
@@ -154,7 +142,6 @@ public class TSMXMPP: NSObject, TSMXMPPClientDelegate {
                 xmppStream.send(messageTo)
             }
         }
-
     }
 
 }
@@ -172,8 +159,7 @@ extension TSMXMPP: XMPPStreamDelegate {
 
         do {
             try xmppStream.authenticate(withPassword: self.passwordJID)
-        } catch let error as NSError  {
-            print("Error authenticating ❌❌❌: " + error.debugDescription)
+        } catch  {
             xmppIncomingMessageDelegate.authenticateFailed(error: TSMXMPPError(errorCode: .authenticationFailed))
         }
     }
@@ -188,13 +174,10 @@ extension TSMXMPP: XMPPStreamDelegate {
     }
 
     public func xmppStream(_ sender: XMPPStream, didNotAuthenticate error: XMLElement) {
-        
-        print("Authentication failed with error ❌❌: " + error.debugDescription)
         xmppIncomingMessageDelegate.authenticateFailed(error: TSMXMPPError(errorCode: .customer, error: error.description))
     }
     
     public func xmppStreamDidDisconnect(_ sender: XMPPStream, withError error: Error?) {
-        print("Stream disconnected with error ❌❌: " + error.debugDescription)
         xmppIncomingMessageDelegate.connect(error: TSMXMPPError(errorCode: .customer, error: error?.localizedDescription))
     }
     
@@ -205,10 +188,7 @@ extension TSMXMPP: XMPPStreamDelegate {
     }
 
     public func xmppStream(_ sender: XMPPStream, willSend message: XMPPMessage) -> XMPPMessage? {
-
         print("Will send message ✈️✉️")
-        print(message.to, message.from, message.body())
-
         // Parse JSON to Object
         let jsonData = message.body().data(using: .utf8)!
         let messageResponse = try! JSONDecoder().decode(TSMMessage.self, from: jsonData)
@@ -220,10 +200,7 @@ extension TSMXMPP: XMPPStreamDelegate {
     }
 
     public func xmppStream(_ sender: XMPPStream, willReceive message: XMPPMessage) -> XMPPMessage? {
-
         print("Will receive send message 👉✉️")
-        print(message.to, message.from, message.body())
-
         // Parse JSON to Object
         let jsonData = message.body().data(using: .utf8)!
         let messageResponse = try! JSONDecoder().decode(TSMMessage.self, from: jsonData)
@@ -235,8 +212,6 @@ extension TSMXMPP: XMPPStreamDelegate {
 
     public func xmppStream(_ sender: XMPPStream, didReceive message: XMPPMessage) {
         print("Receive message 😃✉️ ")
-        print(message.to, message.from, message.body())
-
         // Parse JSON to Object
         let jsonData = message.body().data(using: .utf8)!
         let messageResponse = try! JSONDecoder().decode(TSMMessage.self, from: jsonData)

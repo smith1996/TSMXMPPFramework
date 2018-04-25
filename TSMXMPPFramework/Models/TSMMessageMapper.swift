@@ -32,21 +32,5 @@ public struct TSMMessageMapper {
         return arrayFile
     }
 
-    func transformFilesUser(arrayFiles: [URL]) -> [TSMFile] {
-        var arrayFile = [TSMFile]()
-
-        guard arrayFiles.count != 0 else {
-            arrayFile = []
-            return arrayFile
-        }
-
-        let fileUrl = arrayFiles.map { (data) -> TSMFile in
-            return TSMFile(id: UUID().uuidString, nameFile: data.lastPathComponent, mimeType: data.pathExtension, url: data.absoluteString)
-        }
-
-        arrayFile = fileUrl
-        return arrayFile
-    }
-
 }
 
